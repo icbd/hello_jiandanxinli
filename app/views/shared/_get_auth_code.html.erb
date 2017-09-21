@@ -18,6 +18,10 @@
 
     // 发送验证码
     var get_auth_btn = $("#get_auth_btn");
+    var wait_60s = function () {
+        wait = 60;
+        wait_func(get_auth_btn);
+    };
     get_auth_btn.click(function () {
         var tel = $('#telephone_num').val();
 
@@ -30,9 +34,27 @@
 
                 console.debug(data);
 
-                if (data[0] !== 0) {//验证出错or频繁请求
+                if (data[0] === 0) {//验证出错or频繁请求
                     wait = 60;
                     wait_func(get_auth_btn);
+                }
+
+                switch (data[0]) {
+                    case 0:
+                        // 成功
+                        wait_60s();
+                        break;
+                    case 1:
+                        // 请求频繁
+                        wait_60s();
+                        break;
+                    case  2:
+                        // 验证有误
+                        break;
+                    default:
+                        wait_60s();
+                        break;
+
                 }
 
                 alert(data[1]);
