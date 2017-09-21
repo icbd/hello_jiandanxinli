@@ -1,0 +1,52 @@
+<div class="row login">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:session, url: login_path) do |f| %>
+        <div>
+          <%= f.label :telephone, "phone number", class: "sr-only" %>
+          <%= f.text_field :telephone,
+                           class: "form-control",
+                           required: "required",
+                           id: "telephone_num",
+                           placeholder: "📱 phone number" %>
+        </div>
+
+
+        <div id="login_pswd">
+          <%= f.label :password, "password", class: "sr-only" %>
+          <%= f.password_field :password, class: "form-control", placeholder: "🔐 password" %>
+        </div>
+
+        <!--hidden default-->
+        <div id="login_code">
+          <%= f.label :auth_code, "auth code", class: "sr-only" %>
+          <%= f.text_field :auth_code, class: "form-control", placeholder: "🛡 auth code" %>
+        </div>
+
+        <!--hidden default-->
+        <div id="login_get_auth_btn">
+          <button class="btn btn-default form-control" type="button" id="get_auth_btn">Get Auth Code</button>
+        </div>
+
+        <div id="login_change">
+          <button class="btn btn-default form-control" type="button" id="change_btn">Login with Auth Code</button>
+        </div>
+
+        <div>
+          <%= f.submit "Login", class: "btn btn-primary form-control" %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+    var is_login_form = true;
+
+    $("#change_btn").click(function () {
+        $("#login_change").hide();
+        $("#login_pswd").hide();
+        $("#login_code").show();
+        $("#login_get_auth_btn").show();
+    });
+</script>
+
+<%= render "shared/get_auth_code" %>

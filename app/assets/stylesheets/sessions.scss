@@ -1,0 +1,13 @@
+// Place all the styles related to the sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login {
+  #login_pswd {
+
+  }
+
+  #login_code, #login_get_auth_btn { //默认不显示
+    display: none;
+  }
+}
