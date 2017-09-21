@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   # POST
   def auth_code
     tel = params['telephone']
-    is_login = params['is_login_form'] rescue nil
-
+    is_login = params['is_login_form'] == 'true'
+    
     if is_login
       # 手机号登录
 
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
         end
 
       else
-        render json: [2, user.errors.full_messages.join("\r\n")]
+        render json: [2, 'telephone not found']
       end
 
     else

@@ -31,8 +31,10 @@ class User < ApplicationRecord
   # todo 入库手动验证 or 自动验证手动跳过 ?
   # # before_validation :check_auth_code, on: :create
   def check_auth_code
-    return false if auth_code.empty?
-    
+    if !auth_code || auth_code.empty?
+      return false
+    end
+
     if auth_code != get_auth_code.to_s
       errors.add(:auth_code, "auth code error.")
       false

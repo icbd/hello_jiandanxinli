@@ -24,7 +24,7 @@
         $.ajax({
             url: "/auth_code",
             type: "post",
-            data: {telephone: tel, is_login_form: !!is_login_form},
+            data: {telephone: tel, is_login_form: !!window.is_login_form},
             dataType: "json",
             success: function (data) {
 
