@@ -1,0 +1,76 @@
+<div class="row signup">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :telephone, "phone number", class: "sr-only" %>
+        <div class="input-group">
+          <%= f.text_field :telephone, class: "form-control", required: "required", placeholder: "📱 phone number" %>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="get_auth_btn">Get Auth</button>
+          </span>
+        </div>
+
+
+        <div>
+          <%= f.label :auth_code, "auth code", class: "sr-only" %>
+          <%= f.text_field :auth_code, class: "form-control", required: "required", placeholder: "🛡 auth code" %>
+        </div>
+
+        <div>
+          <%= f.label :password, "password", class: "sr-only" %>
+          <%= f.password_field :password, class: "form-control", placeholder: "🔐 password" %>
+        </div>
+
+        <div>
+          <%= f.submit "Create my account", class: "btn btn-primary form-control" %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+    // 等待倒计时
+    var wait = 60;
+    wait_func = function (o) {
+        if (wait === 0) {
+            o.removeAttr("disabled");
+            o.html("Get Auth");
+            wait = 60;
+        } else {
+            o.attr("disabled", 'disabled');
+            o.html(" " + wait + " s");
+            wait--;
+            setTimeout(function () {
+                wait_func(o);
+            }, 1000)
+        }
+    };
+
+    // 发送验证码
+    var get_auth_btn = $("#get_auth_btn");
+    get_auth_btn.click(function () {
+        $.ajax({
+            url: "/auth_code",
+            type: "post",
+            data: {telephone: $('#user_telephone').val()},
+            dataType: "json",
+            success: function (data) {
+
+                console.debug(data);
+
+                if (data[0] !== 0) {//验证出错or频繁请求
+                    wait = 60;
+                    wait_func(get_auth_btn);
+                }
+
+                alert(data[1]);
+            }
+            ,
+            error: function (data) {
+                console.error(data);
+            }
+        });
+    });
+</script>

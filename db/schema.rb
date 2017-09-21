@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170920130820) do
   create_table "users", force: :cascade do |t|
     t.string "telephone", null: false
     t.string "password_digest"
-    t.string "auth_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["telephone"], name: "index_users_on_telephone", unique: true
