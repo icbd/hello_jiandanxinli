@@ -1,7 +1,7 @@
-
-<p>hello1</p>
-<p>hello2</p>
-<p>hello3</p>
-<p>hello</p>
-<p>hello</p>
-<p>hello</p>
+<div class="hello-page">
+  <% if logged_in? %>
+      <%= image_tag("bym.jpg") %>
+  <% else %>
+      <%= image_tag("jiandanxinli.png") %>
+  <% end %>
+</div>

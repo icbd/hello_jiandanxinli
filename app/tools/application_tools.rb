@@ -14,4 +14,9 @@ module ApplicationTools
     end
     BCrypt::Password.new(hash).is_password?(string)
   end
+
+  # 生成随机令牌
+  def generate_token
+    SecureRandom.urlsafe_base64
+  end
 end

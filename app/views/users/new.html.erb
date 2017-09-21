@@ -5,7 +5,11 @@
 
         <%= f.label :telephone, "phone number", class: "sr-only" %>
         <div class="input-group">
-          <%= f.text_field :telephone, class: "form-control", required: "required", placeholder: "📱 phone number" %>
+          <%= f.text_field :telephone,
+                           class: "form-control",
+                           required: "required",
+                           id: "telephone_num",
+                           placeholder: "📱 phone number" %>
           <span class="input-group-btn">
             <button class="btn btn-default" type="button" id="get_auth_btn">Get Auth</button>
           </span>
@@ -29,48 +33,4 @@
   </div>
 </div>
 
-
-<script>
-    // 等待倒计时
-    var wait = 60;
-    wait_func = function (o) {
-        if (wait === 0) {
-            o.removeAttr("disabled");
-            o.html("Get Auth");
-            wait = 60;
-        } else {
-            o.attr("disabled", 'disabled');
-            o.html(" " + wait + " s");
-            wait--;
-            setTimeout(function () {
-                wait_func(o);
-            }, 1000)
-        }
-    };
-
-    // 发送验证码
-    var get_auth_btn = $("#get_auth_btn");
-    get_auth_btn.click(function () {
-        $.ajax({
-            url: "/auth_code",
-            type: "post",
-            data: {telephone: $('#user_telephone').val()},
-            dataType: "json",
-            success: function (data) {
-
-                console.debug(data);
-
-                if (data[0] !== 0) {//验证出错or频繁请求
-                    wait = 60;
-                    wait_func(get_auth_btn);
-                }
-
-                alert(data[1]);
-            }
-            ,
-            error: function (data) {
-                console.error(data);
-            }
-        });
-    });
-</script>
+<%= render "shared/get_auth_code" %>

@@ -1,0 +1,47 @@
+<script>
+    // 等待倒计时
+    var wait = 60;
+    wait_func = function (o) {
+        if (wait === 0) {
+            o.removeAttr("disabled");
+            o.html("Get Auth");
+            wait = 60;
+        } else {
+            o.attr("disabled", 'disabled');
+            o.html(" " + wait + " s");
+            wait--;
+            setTimeout(function () {
+                wait_func(o);
+            }, 1000)
+        }
+    };
+
+    // 发送验证码
+    var get_auth_btn = $("#get_auth_btn");
+    get_auth_btn.click(function () {
+        var tel = $('#telephone_num').val();
+
+        $.ajax({
+            url: "/auth_code",
+            type: "post",
+            data: {telephone: tel, is_login_form: !!is_login_form},
+            dataType: "json",
+            success: function (data) {
+
+                console.debug(data);
+
+                if (data[0] !== 0) {//验证出错or频繁请求
+                    wait = 60;
+                    wait_func(get_auth_btn);
+                }
+
+                alert(data[1]);
+            }
+            ,
+            error: function (data) {
+                console.error(data);
+            }
+        });
+    });
+
+</script>
