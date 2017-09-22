@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     user = User.find_by(telephone: tel)
 
     if user
-      if code and !code.empty?
+      if code.present?
         # 验证码登录
         user.auth_code = code
         if user.check_auth_code
