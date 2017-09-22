@@ -14,7 +14,7 @@ class User < ApplicationRecord
       false
     else
       # 'OK'
-      $redis.setex(r_key_auth_code, 300, code)
+      $redis.setex(r_key_auth_code, 60, code)
     end
   end
 
